@@ -11,9 +11,9 @@ jobs:
       matrix:
         registry: [ 'https://registry.npmjs.org/', 'https://npm.pkg.github.com/' ]
         include:
-          - token: ${{ secrets.NPM_TOKEN }}
+          - token_secret: 'NPM_TOKEN'
             registry: 'https://registry.npmjs.org/'
-          - token: ${{ secrets.GITHUB_TOKEN }}
+          - token_secret: 'GITHUB_TOKEN'
             registry: 'https://npm.pkg.github.com/'
     runs-on: ubuntu-latest
     steps:
@@ -24,4 +24,4 @@ jobs:
           registry-url: ${{ matrix.registry }}
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ matrix.token }}
+          NODE_AUTH_TOKEN: ${{ secrets[matrix.token_secret] }}
