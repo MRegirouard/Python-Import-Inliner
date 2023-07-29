@@ -27,5 +27,9 @@ for (const path of paths) {
 	}
 }
 
+console.log(`Processing ${mainFile}...`)
+
 const data = processFile(mainFile, paths)
 fs.writeFileSync(outputFile, data)
+
+console.log(`Done! Output written to ${outputFile}.`)
