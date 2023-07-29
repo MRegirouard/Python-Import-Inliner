@@ -1,0 +1,27 @@
+name: Publish to NPM and GitHub Packages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    strategy:
+      matrix:
+        registry: [ 'https://registry.npmjs.org/', 'https://npm.pkg.github.com/' ]
+        include:
+          - token: ${{ secrets.NPM_TOKEN }}
+            registry: 'https://registry.npmjs.org/'
+          - token: ${{ secrets.GITHUB_TOKEN }}
+            registry: 'https://npm.pkg.github.com/'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          registry-url: ${{ matrix.registry }}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ matrix.token }}
