@@ -131,3 +131,6 @@ dist
 
 # TypeScript build output
 /build
+
+# Python files
+*.py
